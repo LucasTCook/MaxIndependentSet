@@ -1,11 +1,21 @@
-import igraph as ig
 import networkx as nx
+import matplotlib.pyplot as plt
+from networkx.readwrite import json_graph
+import json
 
 def main():
-	G=nx.Graph()
 
-
+	G = openGraph()
+	plt.show()
 	FindMaxIndependentSet()
+
+
+def openGraph():
+
+	with open('graph1.json') as f:
+        	js_graph = json.load(f)
+
+	return json_graph.node_link_graph(js_graph)
 
 def FindMaxIndependentSet(graph, vertex):
       label v as discovered
