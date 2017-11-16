@@ -6,7 +6,9 @@ import json
 def main():
 
 	G = openGraph()
-	nx.draw(G)
+	print G.nodes()
+	print G.edges()
+	nx.draw(G, with_labels = True)
 	plt.show()
 #	FindMaxIndependentSet()
 
