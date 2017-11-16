@@ -1,21 +1,31 @@
 import igraph as ig
-import json
+import networkx as nx
 
 def main():
+	G=nx.Graph()
 
 
+	FindMaxIndependentSet()
 
-	N=len(data['nodes'])
-	L=len(data['links'])
-	Edges=[(data['links'][k]['source'], data['links'][k]['target']) for k in range(L)]
+def FindMaxIndependentSet(graph, vertex):
+      label v as discovered
+      for all edges from v to w in G.adjacentEdges(v) do
+          if vertex w is not labeled as discovered then
+              recursively call DFS(G,w)
 
-	G=ig.Graph(Edges, directed=False)
 
-
-
-def Graph():
-
-def Colors():
+class Graph():
+	Vertices = []
+	Edges = [][]	
+	
+	
+	def findEdges():
+		//
+		//
+		//
+	
+	 
+class Colors():
 
 if __name__ == "__main__":
     main()
