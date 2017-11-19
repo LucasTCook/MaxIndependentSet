@@ -8,37 +8,27 @@ def main():
 	G = openGraph()
 	print G.nodes()
 	print G.edges()
-	nx.draw(G, with_labels = True)
+	pos=nx.spring_layout(G) # positions for all nodes
+	node_list_red = ['1','2','3']
+	node_list_blue = ['4','5','6','7']
+	nx.draw_networkx_nodes(G,pos,nodelist=node_list_red, node_color='r')
+	nx.draw_networkx_nodes(G,pos,nodelist=node_list_blue, node_color='b')
+	nx.draw_networkx_edges(G,pos)
+	#nx.draw(G, with_labels = True)
 	plt.show()
-#	FindMaxIndependentSet()
 
 
 def openGraph():
 
 	with open('graph1.json') as f:
         	js_graph = json.load(f)
-
-	return json_graph.node_link_graph(js_graph)
-
-#def FindMaxIndependentSet(graph, vertex):
-#      label v as discovered
- #     for all edges from v to w in G.adjacentEdges(v) do
-  #        if vertex w is not labeled as discovered then
-   #           recursively call DFS(G,w)
+	print len(js_graph['nodes'])
+	return json_graph.node_link_graph(js_graph, False, dict(color='black',visited='false'))
 
 
-#class Graph():
-#	Vertices = []
-#	Edges = [][]	
-#	
-	
-#	def findEdges():
-#		//
-#		//
-#		//
+
 	
 	 
-#class Colors():
 
 if __name__ == "__main__":
     main()
