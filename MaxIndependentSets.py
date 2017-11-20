@@ -3,36 +3,28 @@ import matplotlib.pyplot as plt
 from networkx.readwrite import json_graph
 import json
 
+
 def main():
 
 	G = openGraph()
+	nodes = G.nodes()
+	edges = G.edges()
 
 	labels = {}
 	node_list_red = []
 	node_list_blue = []
 	node_list_green = []
 	node_list_yellow = []
-	nodes = G.nodes()
-	edges = G.edges()
 	pos = nx.spring_layout(G) # positions for all nodes
-
-	print "Neighbor of '1':",
-	neighbors = G.neighbors('1')
-	for n in neighbors:
-		print n,
-
 
 	#
 	# Must call nodes in the array associatively 
 	# 
+	# print nodes['1']['color'],
 
-	print "Node[0]: ",
-	print nodes['1']['color'],
-
-	FindMaxIndependentSet(G,nodes['1'])
+	FindMaxIndependentSet(G,'1')
 	color=nx.get_node_attributes(G,'color')
-
-	print G
+	visited=nx.get_node_attributes(G,'visited')
 	
 	for i in range(1,len(G)+1):
 		labels[str(i)] = str(i)
@@ -65,12 +57,37 @@ def openGraph():
 	return json_graph.node_link_graph(js_graph, False)
 
 def FindMaxIndependentSet(G,v):
-	v['visited'] = 1
-	v['color'] = 3
-
-
+	next = ''
+	nodes = G.nodes()
+	adjColors = []
+	current = nodes[v]
+	current['visited'] = 1
+	neighbors = G.neighbors(v)
+	for n in neighbors:
+		if nodes[n]['visited'] == 1:
+			adjColors.append(nodes[n]['color'])	
+		else:	
+			if(next == ''):
+				next = n
+	print "next: ",
+	print next
+	print "adjColors: ",
+	print adjColors
+	if(1 not in adjColors):
+		print "Changing " + v + " to RED."
+		nodes[v]['color'] = 1
+	elif(2 not in adjColors):
+		print "Changing " + v + " to BLUE."
+		nodes[v]['color'] = 2
+	elif(3 not in adjColors):
+		print "Changing " + v + " to GREEN."
+		nodes[v]['color'] = 3
+	elif(4 not in adjColors):
+		print "Changing " + v + " to YELLOW."
+		nodes[v]['color'] = 4
 	
-	 
+	if(next != ''):
+		FindMaxIndependentSet(G,next) 
 
 if __name__ == "__main__":
     main()
