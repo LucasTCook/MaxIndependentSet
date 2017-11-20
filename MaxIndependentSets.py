@@ -25,7 +25,7 @@ def main():
 	FindMaxIndependentSet(G,'1')
 	color=nx.get_node_attributes(G,'color')
 	visited=nx.get_node_attributes(G,'visited')
-	
+	print nx.maximal_independent_set(G) 
 	for i in range(1,len(G)+1):
 		labels[str(i)] = str(i)
 		
@@ -44,20 +44,19 @@ def main():
 	nx.draw_networkx_nodes(G,pos,nodelist=node_list_green, node_color='g')
 	nx.draw_networkx_nodes(G,pos,nodelist=node_list_yellow, node_color='y')
 	nx.draw_networkx_edges(G,pos)
-	#nx.draw(G, with_labels = True)
+	
 	plt.axis('off')
 #	plt.savefig("labels_and_colors.png") 
 	plt.show()
 
 
 def openGraph():
-
-	with open('graph1.json') as f:
+	with open("graph2.json") as f:
         	js_graph = json.load(f)
 	return json_graph.node_link_graph(js_graph, False)
 
 def FindMaxIndependentSet(G,v):
-	next = ''
+	next = []
 	nodes = G.nodes()
 	adjColors = []
 	current = nodes[v]
@@ -67,27 +66,26 @@ def FindMaxIndependentSet(G,v):
 		if nodes[n]['visited'] == 1:
 			adjColors.append(nodes[n]['color'])	
 		else:	
-			if(next == ''):
-				next = n
-	print "next: ",
-	print next
-	print "adjColors: ",
-	print adjColors
+			next.append(n)	
+#	print "next: ",
+#	print next
+#	print "adjColors: ",
+#	print adjColors
 	if(1 not in adjColors):
-		print "Changing " + v + " to RED."
+#		print "Changing " + v + " to RED."
 		nodes[v]['color'] = 1
 	elif(2 not in adjColors):
-		print "Changing " + v + " to BLUE."
+#		print "Changing " + v + " to BLUE."
 		nodes[v]['color'] = 2
 	elif(3 not in adjColors):
-		print "Changing " + v + " to GREEN."
+#		print "Changing " + v + " to GREEN."
 		nodes[v]['color'] = 3
 	elif(4 not in adjColors):
-		print "Changing " + v + " to YELLOW."
+#		print "Changing " + v + " to YELLOW."
 		nodes[v]['color'] = 4
 	
-	if(next != ''):
-		FindMaxIndependentSet(G,next) 
+	for n in next:
+		FindMaxIndependentSet(G,n) 
 
 if __name__ == "__main__":
     main()
