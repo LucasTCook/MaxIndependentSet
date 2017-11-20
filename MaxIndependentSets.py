@@ -17,15 +17,9 @@ def main():
 	node_list_yellow = []
 	pos = nx.spring_layout(G) # positions for all nodes
 
-	#
-	# Must call nodes in the array associatively 
-	# 
-	# print nodes['1']['color'],
-
 	FindMaxIndependentSet(G,'1')
 	color=nx.get_node_attributes(G,'color')
-	visited=nx.get_node_attributes(G,'visited')
-	print nx.maximal_independent_set(G) 
+
 	for i in range(1,len(G)+1):
 		labels[str(i)] = str(i)
 		
@@ -34,11 +28,28 @@ def main():
 		if(color[str(i)] == 2):
 			node_list_blue.append(str(i))		
 		if(color[str(i)] == 3):
-			node_list_green.append(str(i))		
-		if(color[str(i)] == 4):
 			node_list_yellow.append(str(i))		
-	nx.draw_networkx_labels(G,pos,labels)
+		if(color[str(i)] == 4):
+			node_list_green.append(str(i))		
 
+	print len(node_list_red),
+	print len(node_list_blue),
+	print len(node_list_yellow),
+	print len(node_list_green)
+
+	print "RED: ",
+	print node_list_red
+	print "BLUE: ",
+	print node_list_blue
+	print "YELLOW: ",
+	print node_list_yellow
+	print "GREEN: ",
+	print node_list_green
+
+	
+	
+
+	nx.draw_networkx_labels(G,pos,labels)
 	nx.draw_networkx_nodes(G,pos,nodelist=node_list_red, node_color='r')
 	nx.draw_networkx_nodes(G,pos,nodelist=node_list_blue, node_color='b')
 	nx.draw_networkx_nodes(G,pos,nodelist=node_list_green, node_color='g')
@@ -46,12 +57,11 @@ def main():
 	nx.draw_networkx_edges(G,pos)
 	
 	plt.axis('off')
-#	plt.savefig("labels_and_colors.png") 
 	plt.show()
 
 
 def openGraph():
-	with open("graph2.json") as f:
+	with open("graph1.json") as f:
         	js_graph = json.load(f)
 	return json_graph.node_link_graph(js_graph, False)
 
@@ -67,25 +77,21 @@ def FindMaxIndependentSet(G,v):
 			adjColors.append(nodes[n]['color'])	
 		else:	
 			next.append(n)	
-#	print "next: ",
-#	print next
-#	print "adjColors: ",
-#	print adjColors
 	if(1 not in adjColors):
-#		print "Changing " + v + " to RED."
-		nodes[v]['color'] = 1
+		print "Keeping " + v + " as RED."
 	elif(2 not in adjColors):
-#		print "Changing " + v + " to BLUE."
+		print "Changing " + v + " to BLUE."
 		nodes[v]['color'] = 2
 	elif(3 not in adjColors):
-#		print "Changing " + v + " to GREEN."
+		print "Changing " + v + " to YELLOW."
 		nodes[v]['color'] = 3
 	elif(4 not in adjColors):
-#		print "Changing " + v + " to YELLOW."
+		print "Changing " + v + " to GREEN."
 		nodes[v]['color'] = 4
 	
 	for n in next:
-		FindMaxIndependentSet(G,n) 
+		if(nodes[n]['visited'] == 0):
+			FindMaxIndependentSet(G,n) 
 
 if __name__ == "__main__":
     main()
