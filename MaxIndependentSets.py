@@ -87,7 +87,7 @@ def ColorGraph(G):
 	
 	
 def openGraph():
-	with open("graph2.json") as f:
+	with open("graph3.json") as f:
         	js_graph = json.load(f)
 	return json_graph.node_link_graph(js_graph, False)
 
