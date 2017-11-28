@@ -9,14 +9,13 @@ def main():
 	G = openGraph()
 	nodes = G.nodes()
 	edges = G.edges()
-
-	pos = nx.spring_layout(G) # positions for all nodes
-
+	print ""
 	FindMaxIndependentSet(G,'1')
 	
 	coloredGraph = ColorGraph(G)
 	labels = coloredGraph[0]
 
+	pos = nx.spring_layout(G) # positions for all nodes
 	nx.draw_networkx_labels(G,pos,labels)
 	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[1], node_color='r')
 	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[2], node_color='b')
@@ -38,21 +37,40 @@ def ColorGraph(G):
 	labels = {}
 	
 	color=nx.get_node_attributes(G,'color')
+	
+#	red = len(node_list_red)
+#	blue = len(node_list_blue)
+#	yellow = len(node_list_yellow)
+#	green = len(node_list_green)	
+#	maxColor = "red"
 
 	for i in range(1,len(G)+1):
 		labels[str(i)] = str(i)
 		
 		if(color[str(i)] == 1):
 			node_list_red.append(str(i))	
-		if(color[str(i)] == 2):
-			node_list_blue.append(str(i))		
-		if(color[str(i)] == 3):
-			node_list_yellow.append(str(i))		
-		if(color[str(i)] == 4):
+#			red = len(node_list_red)
+		elif(color[str(i)] == 2):
+			node_list_blue.append(str(i))
+#			blue = len(node_list_blue)		
+		elif(color[str(i)] == 3):
+			node_list_yellow.append(str(i))
+#			yellow = len(node_list_yellow)
+		elif(color[str(i)] == 4):
 			node_list_green.append(str(i))		
+#			green = len(node_list_green)
 
-	print len(node_list_red),
-	print len(node_list_blue),
+#		newMax = max(red,blue,yellow,green)
+#		if(maxColor != newMax):
+#			maxColor = newMax
+
+	if len(node_list_blue) > len(node_list_red):
+		print len(node_list_blue),
+		print len(node_list_red),
+	else:
+		print len(node_list_red),
+		print len(node_list_blue),
+
 	print len(node_list_yellow),
 	print len(node_list_green)
 
@@ -69,7 +87,7 @@ def ColorGraph(G):
 	
 	
 def openGraph():
-	with open("graph3.json") as f:
+	with open("graph2.json") as f:
         	js_graph = json.load(f)
 	return json_graph.node_link_graph(js_graph, False)
 
@@ -98,7 +116,7 @@ def FindMaxIndependentSet(G,v):
 		nodes[v]['color'] = 4
 	
 	for n in next:
-		if(nodes[n]['visited'] == 0):
+		if nodes[n]['visited'] == 0:
 			FindMaxIndependentSet(G,n) 
 
 if __name__ == "__main__":
