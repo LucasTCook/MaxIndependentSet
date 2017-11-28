@@ -21,6 +21,7 @@ def main():
 	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[2], node_color='b')
 	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[3], node_color='y')
 	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[4], node_color='g')
+	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[5], node_color='purple')
 	nx.draw_networkx_edges(G,pos)
 	
 	plt.axis('off')
@@ -33,6 +34,7 @@ def ColorGraph(G):
 	node_list_blue = []
 	node_list_yellow = []
 	node_list_green = []
+	node_list_purple = []	
 
 	labels = {}
 	
@@ -59,7 +61,8 @@ def ColorGraph(G):
 		elif(color[str(i)] == 4):
 			node_list_green.append(str(i))		
 #			green = len(node_list_green)
-
+		elif(color[str(i)] == 5):
+			node_list_purple.append(str(i))
 #		newMax = max(red,blue,yellow,green)
 #		if(maxColor != newMax):
 #			maxColor = newMax
@@ -72,7 +75,8 @@ def ColorGraph(G):
 		print len(node_list_blue),
 
 	print len(node_list_yellow),
-	print len(node_list_green)
+	print len(node_list_green),
+	print len(node_list_purple)
 
 	print "RED: ",
 	print node_list_red
@@ -82,8 +86,10 @@ def ColorGraph(G):
 	print node_list_yellow
 	print "GREEN: ",
 	print node_list_green
+	print "PURPLE: ",
+	print node_list_purple
 	
-	return labels, node_list_red, node_list_blue, node_list_yellow, node_list_green
+	return labels, node_list_red, node_list_blue, node_list_yellow, node_list_green, node_list_purple
 	
 	
 def openGraph():
@@ -114,6 +120,10 @@ def FindMaxIndependentSet(G,v):
 	elif(4 not in adjColors):
 		print "Changing " + v + " to GREEN."
 		nodes[v]['color'] = 4
+	elif(5 not in adjColors):
+		print "Changing " + v + " to PURPLE."
+		nodes[v]['color'] = 5
+		
 	
 	for n in next:
 		if nodes[n]['visited'] == 0:
