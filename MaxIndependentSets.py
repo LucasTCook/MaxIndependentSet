@@ -74,9 +74,11 @@ def ColorGraph(G):
 		print len(node_list_red),
 		print len(node_list_blue),
 
-	print len(node_list_yellow),
-	print len(node_list_green),
-	print len(node_list_purple)
+	if len(node_list_yellow) != 0: print len(node_list_yellow),
+	if len(node_list_green) != 0: print len(node_list_green),
+	if len(node_list_purple) != 0: print len(node_list_purple)
+
+	print ""
 
 	print "RED: ",
 	print node_list_red
@@ -93,7 +95,7 @@ def ColorGraph(G):
 	
 	
 def openGraph():
-	with open("graph3.json") as f:
+	with open("graph7.json") as f:
         	js_graph = json.load(f)
 	return json_graph.node_link_graph(js_graph, False)
 
