@@ -10,14 +10,33 @@ def main():
 	nodes = G.nodes()
 	edges = G.edges()
 
-	labels = {}
-	node_list_red = []
-	node_list_blue = []
-	node_list_green = []
-	node_list_yellow = []
 	pos = nx.spring_layout(G) # positions for all nodes
 
 	FindMaxIndependentSet(G,'1')
+	
+	coloredGraph = ColorGraph(G)
+	labels = coloredGraph[0]
+
+	nx.draw_networkx_labels(G,pos,labels)
+	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[1], node_color='r')
+	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[2], node_color='b')
+	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[3], node_color='y')
+	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[4], node_color='g')
+	nx.draw_networkx_edges(G,pos)
+	
+	plt.axis('off')
+	plt.show()
+
+
+def ColorGraph(G):
+
+	node_list_red = []
+	node_list_blue = []
+	node_list_yellow = []
+	node_list_green = []
+
+	labels = {}
+	
 	color=nx.get_node_attributes(G,'color')
 
 	for i in range(1,len(G)+1):
@@ -45,21 +64,10 @@ def main():
 	print node_list_yellow
 	print "GREEN: ",
 	print node_list_green
-
+	
+	return labels, node_list_red, node_list_blue, node_list_yellow, node_list_green
 	
 	
-
-	nx.draw_networkx_labels(G,pos,labels)
-	nx.draw_networkx_nodes(G,pos,nodelist=node_list_red, node_color='r')
-	nx.draw_networkx_nodes(G,pos,nodelist=node_list_blue, node_color='b')
-	nx.draw_networkx_nodes(G,pos,nodelist=node_list_green, node_color='g')
-	nx.draw_networkx_nodes(G,pos,nodelist=node_list_yellow, node_color='y')
-	nx.draw_networkx_edges(G,pos)
-	
-	plt.axis('off')
-	plt.show()
-
-
 def openGraph():
 	with open("graph3.json") as f:
         	js_graph = json.load(f)
