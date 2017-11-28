@@ -1,5 +1,6 @@
 {
   "nodes": [
+<<<<<<< HEAD
     {"id": "1", "group": 1},
     {"id": "2", "group": 1},
     {"id": "3", "group": 7},
@@ -16,6 +17,26 @@
     {"source": "2", "target": "6", "value": 1},
     {"source": "6", "target": "5", "value": 1},
     {"source": "7", "target": "1", "value": 1}
+=======
+    {"id": "1", "color": 1, "visited": 0},
+    {"id": "2", "color": 1, "visited": 0},
+    {"id": "3", "color": 1, "visited": 0},
+    {"id": "4", "color": 1, "visited": 0},
+    {"id": "5", "color": 1, "visited": 0},
+    {"id": "6", "color": 1, "visited": 0},
+    {"id": "7", "color": 1, "visited": 0}
+  ],
+  "links": [
+    {"source": "2", "target": "1", "value": 1},
+    {"source": "1", "target": "3", "value": 1},
+    {"source": "2", "target": "4", "value": 1},
+    {"source": "3", "target": "6", "value": 1},
+    {"source": "2", "target": "6", "value": 1},
+    {"source": "6", "target": "5", "value": 1},
+    {"source": "7", "target": "1", "value": 1},
+    {"source": "1", "target": "5", "value": 1},
+    {"source": "7", "target": "4", "value": 1}
+>>>>>>> c4b385c67e641f87e55bba6da09818f0338cb102
   ]
 }
 
