@@ -2,7 +2,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from networkx.readwrite import json_graph
 import json
-
+import numpy
+import os
 
 def main():
 
@@ -22,6 +23,7 @@ def main():
 	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[3], node_color='y')
 	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[4], node_color='g')
 	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[5], node_color='purple')
+	nx.draw_networkx_nodes(G,pos,nodelist=coloredGraph[6], node_color='white')
 	nx.draw_networkx_edges(G,pos)
 	
 	plt.axis('off')
@@ -35,6 +37,7 @@ def ColorGraph(G):
 	node_list_yellow = []
 	node_list_green = []
 	node_list_purple = []	
+	node_list_white = []	
 
 	labels = {}
 	
@@ -51,21 +54,16 @@ def ColorGraph(G):
 		
 		if(color[str(i)] == 1):
 			node_list_red.append(str(i))	
-#			red = len(node_list_red)
 		elif(color[str(i)] == 2):
 			node_list_blue.append(str(i))
-#			blue = len(node_list_blue)		
 		elif(color[str(i)] == 3):
 			node_list_yellow.append(str(i))
-#			yellow = len(node_list_yellow)
 		elif(color[str(i)] == 4):
 			node_list_green.append(str(i))		
-#			green = len(node_list_green)
 		elif(color[str(i)] == 5):
 			node_list_purple.append(str(i))
-#		newMax = max(red,blue,yellow,green)
-#		if(maxColor != newMax):
-#			maxColor = newMax
+		elif(color[str(i)] == 6):
+			node_list_white.append(str(i))
 
 	if len(node_list_blue) > len(node_list_red):
 		print len(node_list_blue),
@@ -76,7 +74,8 @@ def ColorGraph(G):
 
 	if len(node_list_yellow) != 0: print len(node_list_yellow),
 	if len(node_list_green) != 0: print len(node_list_green),
-	if len(node_list_purple) != 0: print len(node_list_purple)
+	if len(node_list_purple) != 0: print len(node_list_purple),
+	if len(node_list_white) != 0: print len(node_list_white)
 
 	print ""
 
@@ -90,13 +89,22 @@ def ColorGraph(G):
 	print node_list_green
 	print "PURPLE: ",
 	print node_list_purple
-	
-	return labels, node_list_red, node_list_blue, node_list_yellow, node_list_green, node_list_purple
+	print "WHITE: ",
+	print node_list_white	
+
+
+	return labels, node_list_red, node_list_blue, node_list_yellow, node_list_green, node_list_purple, node_list_white
 	
 	
 def openGraph():
-	with open("graph7.json") as f:
-        	js_graph = json.load(f)
+	filename = raw_input('File Name (.json): ')
+	if os.path.isfile(filename): 
+		with open(filename) as f:
+        		js_graph = json.load(f)
+	else:
+		print "Error: File does not exist... Try Again..."
+		openGraph()
+
 	return json_graph.node_link_graph(js_graph, False)
 
 def FindMaxIndependentSet(G,v):
@@ -125,6 +133,9 @@ def FindMaxIndependentSet(G,v):
 	elif(5 not in adjColors):
 		print "Changing " + v + " to PURPLE."
 		nodes[v]['color'] = 5
+	elif(6 not in adjColors):
+		print "Changing " + v + " to WHITE."
+		nodes[v]['color'] = 6
 		
 	
 	for n in next:
